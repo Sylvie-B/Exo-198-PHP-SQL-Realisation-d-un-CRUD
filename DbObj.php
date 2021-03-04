@@ -30,11 +30,11 @@ class DbObj
         return $conn;
     }
 
-    public function addStudent ($pdo, string $table , string $nom, string $prenom, int $age)
+    public function addStudent ($pdo, string $nom, string $prenom, int $age)
     {
         try{
             $sql = "
-                INSERT INTO $table (nom, prenom, age)
+                INSERT INTO exo198.eleve (nom, prenom, age)
                 VALUES ('$nom', '$prenom', '$age')
             ";
 
@@ -45,10 +45,10 @@ class DbObj
         }
     }
 
-    public function readList ($pdo, string $table)
+    public function readList ($pdo)
     {
         try{
-            $stmt = $pdo->prepare("SELECT * from $table");
+            $stmt = $pdo->prepare("SELECT * from exo198.eleve");
             $state = $stmt->execute();
             if ($state) {
                 foreach ($stmt->fetchAll() as $student)
@@ -62,21 +62,21 @@ class DbObj
 
     public function updateStudent ($pdo, string $prenom, string $nom, int $age, int $id) {
 
-            $stmt = $pdo->prepare("UPDATE exo198.eleve SET prenom = :prenom, nom = :nom, age = :age WHERE id = :id");
+        $stmt = $pdo->prepare("UPDATE exo198.eleve SET prenom = :prenom, nom = :nom, age = :age WHERE id = :id");
 
-            $stmt->bindParam(':prenom', $prenom);
-            $stmt->bindParam(':nom', $nom);
-            $stmt->bindParam(':age', $age);
-            $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':prenom', $prenom);
+        $stmt->bindParam(':nom', $nom);
+        $stmt->bindParam(':age', $age);
+        $stmt->bindParam(':id', $id);
 
-            $stmt->execute();
+        $stmt->execute();
 
-            if($stmt->rowCount() > 0){
-                echo 'update <br>';
-            }
-            else {
-                echo 'no update <br>';
-            }
+        if($stmt->rowCount() > 0){
+            echo 'update <br>';
+        }
+        else {
+            echo 'no update <br>';
+        }
 
     }
 
@@ -92,5 +92,4 @@ class DbObj
             echo "delete failed : ".$exception->getMessage();
         }
     }
-
 }
