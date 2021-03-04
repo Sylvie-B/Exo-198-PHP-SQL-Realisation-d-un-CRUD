@@ -60,8 +60,8 @@ class DbObj
         }
     }
 
-    public function updateStudent ($pdo, string $table, string $colName, string $item, int $id) {
-        try {
+    public function updateStudent ($pdo, string $table, string $colName, $item, int $id) {
+
             $stmt = $pdo->prepare("UPDATE $table SET $colName = :colName WHERE id = :id");
 
             $stmt->bindParam(':colName', $item);
@@ -70,15 +70,13 @@ class DbObj
             $stmt->execute();
 
             if($stmt->rowCount() > 0){
-                echo 'update';
+                echo 'update <br>';
             }
             else {
-                echo 'no update';
+                echo 'no update <br>';
             }
-        }
-        catch (PDOException $exception){
-            echo "update failed : ".$exception->getMessage();
-        }
+
+
 
     }
 
