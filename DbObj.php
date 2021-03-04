@@ -48,7 +48,7 @@ class DbObj
     public function readList ($pdo, string $table)
     {
         try{
-            $stmt = $pdo->prepare("SELECT * from ".$table);
+            $stmt = $pdo->prepare("SELECT * from $table");
             $state = $stmt->execute();
             if ($state) {
                 foreach ($stmt->fetchAll() as $student)
@@ -61,18 +61,38 @@ class DbObj
     }
 
     public function updateStudent ($pdo, string $table, string $colName, string $item, int $id) {
-       $stmt = $pdo->prepare("UPDATE ".$table." SET ".$colName." = :colName WHERE id = :".$id);
+        try {
+            $stmt = $pdo->prepare("UPDATE $table SET $colName = :colName WHERE id = :id");
 
-       $stmt->bindParam(':colName', $item);
-       $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':colName', $item);
+            $stmt->bindParam(':id', $id);
 
-       $stmt->execute();
+            $stmt->execute();
 
-       if($stmt->rowCount() > 0){
-           echo 'update';
-       }
-       else {
-           echo 'no update';
-       }
+            if($stmt->rowCount() > 0){
+                echo 'update';
+            }
+            else {
+                echo 'no update';
+            }
+        }
+        catch (PDOException $exception){
+            echo "update failed : ".$exception->getMessage();
+        }
+
     }
+
+    public function deleteStudent ($pdo, int $id) {
+        try {
+            $sql = "DELETE FROM exo198.eleve WHERE id = $id";
+
+            if ($pdo->exec($sql) !== false){
+                echo "entrée supprimée";
+            }
+        }
+        catch (PDOException $exception){
+            echo "delete failed : ".$exception->getMessage();
+        }
+    }
+
 }
