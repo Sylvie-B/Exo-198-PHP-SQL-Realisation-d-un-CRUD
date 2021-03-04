@@ -13,7 +13,7 @@ $pdo->readList($conn, 'exo198.eleve');
 echo "<br>";
 
 // Update
-$pdo->updateStudent($conn, 'exo198.eleve', 'age', 30, 6);
+$pdo->updateStudent($conn, 'Mike', 'Smith', 18, 5);
 
 // Read after update
 $pdo->readList($conn, 'exo198.eleve');

@@ -60,11 +60,13 @@ class DbObj
         }
     }
 
-    public function updateStudent ($pdo, string $table, string $colName, $item, int $id) {
+    public function updateStudent ($pdo, string $prenom, string $nom, int $age, int $id) {
 
-            $stmt = $pdo->prepare("UPDATE $table SET $colName = :colName WHERE id = :id");
+            $stmt = $pdo->prepare("UPDATE exo198.eleve SET prenom = :prenom, nom = :nom, age = :age WHERE id = :id");
 
-            $stmt->bindParam(':colName', $item);
+            $stmt->bindParam(':prenom', $prenom);
+            $stmt->bindParam(':nom', $nom);
+            $stmt->bindParam(':age', $age);
             $stmt->bindParam(':id', $id);
 
             $stmt->execute();
@@ -75,8 +77,6 @@ class DbObj
             else {
                 echo 'no update <br>';
             }
-
-
 
     }
 
