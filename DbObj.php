@@ -54,10 +54,11 @@ class DbObj
                 foreach ($stmt->fetchAll() as $student)
                 echo $student['id']." ".$student['nom']." ".$student['prenom']." ".$student['age']." ans<br>";
             }
-
         }
         catch (PDOException $exception){
             echo "list reading error : ".$exception->getMessage();
         }
     }
+
+
 }
