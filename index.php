@@ -11,23 +11,9 @@ $conn = $pdo->connect();
 $pdo->readList($conn, 'exo198.eleve');
 
 // Update
-//$pdo->updateStudent($conn, 'exo198.eleve', 'nom', 'Johnson', 6);
+$pdo->updateStudent($conn, 'exo198.eleve', 'prenom', 'John', 6);
 
-$nom = 'Johson';
-$id = 6;
 
-$stmt = $conn->prepare("UPDATE exo198.eleve SET nom = :nom WHERE id = :id");
-$stmt->bindParam(':nom', $nom);
-$stmt->bindParam(':id', $id);
-
-$stmt->execute();
-
-if($stmt->rowCount() > 0){
-    echo 'update';
-}
-else {
-    echo 'no update';
-}
 
 
 // Delete

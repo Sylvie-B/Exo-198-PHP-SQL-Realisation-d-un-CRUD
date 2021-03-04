@@ -60,5 +60,19 @@ class DbObj
         }
     }
 
+    public function updateStudent ($pdo, string $table, string $colName, string $item, int $id) {
+       $stmt = $pdo->prepare("UPDATE ".$table." SET ".$colName." = :colName WHERE id = :".$id);
 
+       $stmt->bindParam(':colName', $item);
+       $stmt->bindParam(':id', $id);
+
+       $stmt->execute();
+
+       if($stmt->rowCount() > 0){
+           echo 'update';
+       }
+       else {
+           echo 'no update';
+       }
+    }
 }
