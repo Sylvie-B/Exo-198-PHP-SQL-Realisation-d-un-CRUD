@@ -4,21 +4,21 @@
 class DbObj
 {
     private string $server;
-    private string $db;
+    private string $database;
     private string $user;
     private string $pass;
 
     public function __construct()
     {
         $this->server='localhost';
-        $this->db='exo198';
+        $this->database='exo198';
         $this->user = 'root';
         $this->pass = '';
     }
 
     public function connect(): ?PDO {
         try {
-            $conn = new PDO("mysql:host=$this->server;dbname=$this->db;charset=utf8", $this->user, $this->pass);
+            $conn = new PDO("mysql:host=$this->server;dbname=$this->database;charset=utf8", $this->user, $this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
@@ -28,5 +28,34 @@ class DbObj
             return null;
         }
         return $conn;
+    }
+
+    public function addStudent (string $nom, string $prenom, int $age) : ?string
+    {
+        try{
+            return "
+                INSERT INTO exo198.eleve (nom, prenom, age)
+                VALUES ('$nom', '$prenom', '$age')
+            ";
+        }
+        catch (PDOException $exception){
+            echo "add student error : ".$exception->getMessage();
+        }
+    }
+
+    public function readList ($pdo, $table)
+    {
+        try{
+            $stmt = $pdo->prepare("SELECT * from ".$table);
+            $state = $stmt->execute();
+            if ($state) {
+                foreach ($stmt->fetchAll() as $student)
+                echo $student['id']." ".$student['nom']." ".$student['prenom']." ".$student['age']." ans<br>";
+            }
+
+        }
+        catch (PDOException $exception){
+            echo "list reading error : ".$exception->getMessage();
+        }
     }
 }
