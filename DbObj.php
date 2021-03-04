@@ -52,7 +52,7 @@ class DbObj
             $state = $stmt->execute();
             if ($state) {
                 foreach ($stmt->fetchAll() as $student)
-                echo $student['id']." ".$student['nom']." ".$student['prenom']." ".$student['age']." ans<br>";
+                echo "<div id='list'>".$student['id']." ".$student['nom']." ".$student['prenom']." ".$student['age']." ans</div>";
             }
         }
         catch (PDOException $exception){
