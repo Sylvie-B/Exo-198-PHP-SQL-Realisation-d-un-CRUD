@@ -30,20 +30,22 @@ class DbObj
         return $conn;
     }
 
-    public function addStudent (string $nom, string $prenom, int $age) : ?string
+    public function addStudent ($pdo, string $table , string $nom, string $prenom, int $age)
     {
         try{
-            return "
-                INSERT INTO exo198.eleve (nom, prenom, age)
+            $sql = "
+                INSERT INTO $table (nom, prenom, age)
                 VALUES ('$nom', '$prenom', '$age')
             ";
+
+            return $pdo->exec($sql);
         }
         catch (PDOException $exception){
             echo "add student error : ".$exception->getMessage();
         }
     }
 
-    public function readList ($pdo, $table)
+    public function readList ($pdo, string $table)
     {
         try{
             $stmt = $pdo->prepare("SELECT * from ".$table);
